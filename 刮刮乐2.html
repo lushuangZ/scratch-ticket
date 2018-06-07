@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>guagua</title>
+    <style>
+        #mycanvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="mycanvas" width="500" height="500"></canvas>
+    <script src="./jquery-3.3.1.js"></script>
+    <script>
+        var canvas = document.getElementById('mycanvas');
+        var cts = canvas.getContext('2d');
+        cts.fillStyle = '#ccc';
+        cts.fillRect(0, 0, 500, 500);
+        cts.globalCompositeOperation = 'destination-out';
+        // 鼠标点击获取位置
+        $('canvas').mousedown(function (event) {
+            var e = event;
+            var X = e.clientX;
+            var Y = e.clientY;
+            // 鼠标移动
+            $('canvas').mousemove(function (e) {
+                var newLeft = e.clientX;
+                var newTop = e.clientY;
+                this.style.left = newLeft + 'px';
+                this.style.top = newTop + 'px';
+                console.log(this.style.left, this.style.left)
+                cts.globalCompositeOperation = 'destination-out';
+                cts.beginPath();
+                cts.arc(newLeft, newTop, 25, 0, Math.PI * 2);
+                cts.fill();
+            });
+            $('canvas').mouseover(function () {
+                $('canvas').mousemove = null;
+                $('canvas').mouseup = null;
+            });
+        });
+        // 随机换图片
+        var imgArr = ['./4.jpg','./3.jpg','./2.jpg','./1.jpg'];
+        var rng = parseInt(Math.random()*(imgArr.length));
+        console.log(rng)
+        var currentImage = imgArr[rng];
+        canvas.style.backgroundImage = "url("+currentImage+")";
+
+
+
+    </script>
+</body>
+
+</html>
